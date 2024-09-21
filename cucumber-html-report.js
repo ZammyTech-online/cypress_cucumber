@@ -1,6 +1,7 @@
 const report = require("multiple-cucumber-html-reporter");
+
 report.generate({
-  jsonDir: "jsonlogs", // ** Path of .json file **//
+  jsonDir: "jsonlogs", // Ruta a los logs JSON generados por Cucumber
   reportPath: "./reports/cucumber-htmlreport.html",
   metadata: {
     browser: {
@@ -14,3 +15,4 @@ report.generate({
     },
   },
 });
+

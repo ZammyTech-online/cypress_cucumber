@@ -19,12 +19,13 @@
   "license": "ISC",
   "devDependencies": {
     "@badeball/cypress-cucumber-preprocessor": "^20.1.2",
-    "@shelex/cypress-allure-plugin": "^2.34.0",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.3",
+    "@shelex/cypress-allure-plugin": "^2.40.2",
     "cypress": "^13.14.2",
     "multiple-cucumber-html-reporter": "^3.0.1"
   },
   "dependencies": {
-    "@bahmutov/cypress-esbuild-preprocessor": "^2.1.5",
-    "esbuild": "^0.16.17"
+    "esbuild": "^0.23.1"
   }
+  
 }
