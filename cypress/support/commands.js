@@ -1,25 +1,26 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+require('cypress-xpath');
+
+// Comando personalizado para texto visible y tipeo
+Cypress.Commands.add("Texto_visible", (selector, texto, t) => { 
+    cy.get(selector, { timeout: 20000 }).should('be.visible').type(texto);
+    cy.wait(t);
+});
+
+// Comando para hacer clic en un botón usando XPath
+Cypress.Commands.add("ClickBotonSubmit", (selector, tiempoEspera) => { 
+    cy.xpath(selector, { timeout: 10000 }).should('be.visible').click();
+    cy.wait(tiempoEspera);
+});
+
+// Comando para visitar una página web
+Cypress.Commands.add("VisitarWeb", (url, tiempoEspera) => { 
+    cy.visit(url);
+    cy.wait(tiempoEspera);
+});
+
+// Comando para buscar un elemento por ID, escribir y enviar
+Cypress.Commands.add("BuscarYEnviar", (id, texto, tiempoEspera) => {
+    cy.get(`#${id}`, { timeout: 10000 }).should('be.visible').type(texto).wait(tiempoEspera).type('{enter}');
+});
+
+// Agrega más comandos según los necesites
