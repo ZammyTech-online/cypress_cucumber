@@ -3,24 +3,23 @@ class LoginPage {
     usernameInput: () => cy.get("#user-name"),
     passwordInput: () => cy.get("#password"),
     loginBtn: () => cy.get("#login-button"),
-    errorMessage: () => cy.get(".error-message-container"), // Agregado
+    errorMessage: () => cy.get(".error-message-container"),
   };
 
-  // Métodos reutilizables con clear() antes de escribir
   typeUsername(username) {
-    this.elements.usernameInput().clear().type(username);
+    this.elements.usernameInput().clear().type(username, { delay: 100 });
   }
 
   typePassword(password) {
-    this.elements.passwordInput().clear().type(password);
+    this.elements.passwordInput().clear().type(password, { delay: 100 });
   }
 
   clickLogin() {
-    this.elements.loginBtn().click();
+    this.elements.loginBtn().should("be.visible").click();
   }
 
-  // Método principal para iniciar sesión
   submitLogin(username, password) {
+    cy.log("Submitting login with credentials.");
     this.typeUsername(username);
     this.typePassword(password);
     this.clickLogin();

@@ -1,31 +1,28 @@
 import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
-import { loginPage } from '@pages/LoginPage';
+import { loginPage } from "../../pages/LoginPage";
 
-// Step definition para visitar la página de login
-Given("A web browser is at the saucelabs login page", () => {
+Given("The user navigates to the login page", () => {
   cy.visit("/");
+  cy.url().should("include", "saucedemo.com");
 });
 
-// Step definition para ingresar credenciales y hacer login
-When("A user enters the username {string}, the password {string}, and clicks on the login button", (username, password) => {
+When("The user logs in with username {string} and password {string}", (username, password) => {
   loginPage.submitLogin(username, password);
-  cy.log(`Entered Username: ${username}, Password: ${password}`);
+  cy.log(`Attempting login with Username: ${username}, Password: ${password}`);
 });
 
-// Step definition para credenciales incorrectas usando Data Table
-When("A user provides incorrect credentials, and clicks on the login button", (table) => {
-  table.hashes().forEach((row) => {
-    loginPage.submitLogin(row.username, row.password);
-    cy.log(`Tested incorrect login with Username: ${row.username}, Password: ${row.password}`);
+When("The user attempts to log in with invalid credentials:", (dataTable) => {
+  dataTable.hashes().forEach(({ username, password }) => {
+    loginPage.submitLogin(username, password);
+    cy.log(`Testing incorrect login with Username: ${username}, Password: ${password}`);
   });
 });
 
-// Step definition para validar que la URL contiene 'inventory.html'
-Then("The url will contain the inventory subdirectory", () => {
-  cy.url().should("include", "/inventory.html");
+Then("The user should be redirected to {string}", (expectedUrl) => {
+  cy.url().should("include", expectedUrl);
 });
 
-// Step definition para validar el mensaje de error
-Then("The error message {string} is displayed", (errorMessage) => {
-  loginPage.elements.errorMessage().should("contain.text", errorMessage);
+Then("The error message {string} should be displayed", (expectedMessage) => {
+  loginPage.elements.errorMessage().should("be.visible")
+    .and("contain.text", expectedMessage);
 });
